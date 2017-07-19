@@ -14,7 +14,7 @@ name="${@:1}"
 url='gs://data.yt8m.org/1/j/'
 # echo $name
 
-mid=$(egrep "$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
+mid=$(egrep "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
 mid=$mid$js
 # echo $mid
 

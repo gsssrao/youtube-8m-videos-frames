@@ -5,60 +5,48 @@ The official `youtube-8m dataset` website contains information for downloading o
 
 ## Dependencies
 
-##### Dependencies for downloading youtube video ids for categories
+Dependencies for downloading youtube video ids for categories
+
 * [gsutil](https://cloud.google.com/storage/docs/gsutil_install)
 
-##### Dependencies for downloading youtube videos from ids
+Dependencies for downloading youtube videos from ids
+
 * [youtube-dl](https://github.com/rg3/youtube-dl#installation)
 
-##### Dependencies for generation of frames from videos
+Dependencies for generation of frames from videos
+
 * [ffmpeg](https://www.ffmpeg.org/download.html)
 
 ## TODO
-- [ ] Improve the video generation using a file for categories
+- [x] Improve the video generation using a file for categories
+- [x] Add support for video limit per category
 
 ## Usage 
-First look up the category you want to download from `youtube8mcategories.txt`. The number of videos on youtube corresponding to that category is listed under the parenthesis.
 
-Say, you are interested in the category `The Walt Disney Company` copy its name (You can see that there are 20674 videos corresponding to this category as listed under the parenthesis corresponding to it).
+First look up the categories you want to download from `youtube8mcategories.txt`. The number of videos on youtube corresponding to that category is listed under the parenthesis.
 
-### Download video-ids  
-The first step is to download video-ids corresponding to the category. Say, you want to
+Copy all these categories to a txt file with each category in a new line. Make sure that you don't add any extra characters to category name and that you add a new line after the last category.
+
+Check `selectedcategories.txt` for example format. 
+
+
+### Download multiple category videos and ids
+
 ```
-bash downloadcategoryids.sh <category-name>
-```
-
-This downloads youtube-ids corresponding to the `category-name` under the folder `category-ids`
-
-#### Example usage
-```
-bash downloadcategoryids.sh The Walt Disney Company
+bash downloadmulticategoryvideos.sh <number-of-videos-per-category> <selected-category-file-name>"
 ```
 
-Be really careful and don't include any extra spaces after the category name. 
+This downloads youtube-ids corresponding to the categories in `<selected-category-file-name>` file under the folder `category-ids`. It also downloads `<number-of-videos-per-category>` videos per category in `videos` folder (The video names have a prefix as their category name). If you would like to download all the videos specify `<number-of-videos-per-category>` as `0`.
 
-Correct category name: "The Walt Disney Company"
+By default a video is only downloaded if a `mp4` is available of `1280x720` resolution. You can change this by changing the value for `-f` modifier in `downloadvideos.sh` (`-f 22` stands for `mp4 1280x720`). To list the types of formats supported refer this stackoverflow [question](https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl).
 
-Incorrect category name: "The Walt Disney Company " or " The Walt Disney Company" etc.
 
-### Download videos  
-The next step is to download videos corresponding to the video-ids downloaded in the previous step.
+***Example Usage***
 ```
-bash downloadvideos.sh <category-name>
+ bash downloadmulticategoryvideos.sh 10 selectedcategories.txt
 ```
 
-This downloads youtube videos corresponding to the `category-name` under the folder `videos`. 
-
-By default it tries to download the video only if a `mp4` is present of `1280x720` resolution. You can change this by changing the value for `-f` modifier in `downloadvideos.sh` (`-f 22` stands for `mp4 1280x720`). To list the types of formats supported refer this stackoverflow [question](https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl).
-
-#### Example usage
-```
-bash downloadvideos.sh The Walt Disney Company
-```
-
-Again be careful and don't include any extra spaces after the category name. 
-Correct category name: `The Walt Disney Company`
-Incorrect category name: `The Walt Disney Company ` or ` The Walt Disney Company` etc.
+This will download 10 videos for each category in `selectedcategories.txt`
 
 ### Generate Frames
 
@@ -73,12 +61,52 @@ The file size of the frames is the following order: `bmp` > `png` > `jpg`
 
 I would suggest to use `png` if `bmp` is not specifically required. 
 
-#### Example usage
+***Example usage***
 ```
 mkdir frames
 bash generateframesfromvideos.sh videos frames png
 ```
-This will generates frames in `frames` folder.
+This will generates frames in `png` format under the `frames` folder.
+
+### Optional Usage
+
+#### Download video-ids  
+
+```
+bash downloadcategoryids.sh <category-name>
+```
+
+This downloads youtube-ids corresponding to the `category-name` under the folder `category-ids`
+
+***Example usage***
+
+```
+bash downloadcategoryids.sh The Walt Disney Company
+```
+
+Be really careful and don't include any extra spaces after the category name. 
+
+Correct category name: "The Walt Disney Company"
+
+Incorrect category name: "The Walt Disney Company " or " The Walt Disney Company" etc.
+
+#### Download videos 
+
+To download videos corresponding to the video-ids downloaded in the previous step.
+```
+bash downloadvideos.sh <number-of-videos> <category-name>
+```
+
+This downloads `<number-of-videos>` youtube videos corresponding to the `category-name` under the folder `videos`. If you want to download all the videos of the category specify `<number-of-videos>` as `0`
+
+By default it tries to download the video only if a `mp4` is present of `1280x720` resolution. You can change this by changing the value for `-f` modifier in `downloadvideos.sh` (`-f 22` stands for `mp4 1280x720`). To list the types of formats supported refer this stackoverflow [question](https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl).
+
+***Example usage***
+```
+bash downloadvideos.sh 10 The Walt Disney Company
+```
+
+This will download 10 videos of the `The Walt Disney Company` category in the `videos` folder.
 
 
 ## Contact
