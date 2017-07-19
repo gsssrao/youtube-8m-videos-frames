@@ -5,13 +5,13 @@ The official `youtube-8m dataset` website contains information for downloading o
 
 ## Dependencies
 
-### Dependencies for downloading youtube video ids for categories
+##### Dependencies for downloading youtube video ids for categories
 * [gsutil](https://cloud.google.com/storage/docs/gsutil_install)
 
-### Dependencies for downloading youtube videos from ids
+##### Dependencies for downloading youtube videos from ids
 * [youtube-dl](https://github.com/rg3/youtube-dl#installation)
 
-### Dependencies for generation frames from videos
+##### Dependencies for generation of frames from videos
 * [ffmpeg](https://www.ffmpeg.org/download.html)
 
 ## TODO
@@ -36,8 +36,10 @@ bash downloadcategoryids.sh The Walt Disney Company
 ```
 
 Be really careful and don't include any extra spaces after the category name. 
-Correct category name: `The Walt Disney Company`
-Incorrect category name: `The Walt Disney Company ` or ` The Walt Disney Company` etc.
+
+Correct category name: "The Walt Disney Company"
+
+Incorrect category name: "The Walt Disney Company " or " The Walt Disney Company" etc.
 
 ### Download videos  
 The next step is to download videos corresponding to the video-ids downloaded in the previous step.
@@ -67,7 +69,7 @@ bash generateframesfromvideos.sh <path_to_directory_containing_videos> <path_to_
 
 This generates the frames corresponding to the videos. In `<frame_format>` you can specify `png`(lossless compression) or `jpg`(lossy compression) or `bmp`(lossless) etc.
 
-For file size of the frames is in the following order: `bmp` > `png` > `jpg`
+The file size of the frames is the following order: `bmp` > `png` > `jpg`
 
 I would suggest to use `png` if `bmp` is not specifically required. 
 
