@@ -14,12 +14,12 @@ name="${@:1}"
 url='gs://data.yt8m.org/1/j/'
 # echo $name
 
-mid=$(egrep "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
+mid=$(grep -E "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
 mid=$mid$js
 # echo $mid
 
 mkdir -p category-ids
 
 $GSUTIL cp $url$mid category-ids/
-egrep -oh [a-zA-Z0-9_-]{11} category-ids/$mid > category-ids/"${mid%.*}".txt
+grep -E -oh [a-zA-Z0-9_-]{11} category-ids/$mid > category-ids/"${mid%.*}".txt
 rm -rf category-ids/$mid

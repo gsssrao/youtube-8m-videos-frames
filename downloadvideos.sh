@@ -13,7 +13,7 @@ fi
 txt=".txt"
 name="${@:2}"
 
-mid=$(egrep "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
+mid=$(grep -E "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
 mid=$mid$txt
 
 mkdir -p videos
