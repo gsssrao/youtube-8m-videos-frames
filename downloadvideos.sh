@@ -13,7 +13,13 @@ fi
 txt=".txt"
 name="${@:2}"
 
-mid=$(grep -P "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
+if [ "$(uname)" == "Darwin" ]; then
+    # Mac OS X platform
+    mid=$(grep -E "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    # GNU/Linux platform
+    mid=$(grep -P "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
+fi
 mid=$mid$txt
 
 mkdir -p videos
