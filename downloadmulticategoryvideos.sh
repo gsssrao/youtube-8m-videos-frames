@@ -6,6 +6,6 @@ fi
 
 while read line
 	do
-		bash downloadcategoryids.sh "${line}"
+		bash downloadcategoryids.sh $1 "${line}"
 		bash downloadvideos.sh $1 "${line}"
 	done < "$2"

@@ -3,11 +3,13 @@ This repository contains scripts for downloading videos corresponding to a parti
 
 The official `youtube-8m dataset` website contains information for downloading only videos and frame level features in the format of tensorflow protocal buffers. Hence, in this repository I wrote a few bash scripts for download ids, videos and frames of youtube-8m dataset.
 
+**UPDATED to support May 2018 version which has 6.1M videos, 3862 classes** (The older Feb 2017 version of the Youtube8M dataset had 7.0M videos and 4716 classes)
+
 ## Dependencies
 
 Dependencies for downloading youtube video ids for categories
 
-* [gsutil](https://cloud.google.com/storage/docs/gsutil_install)
+* Basic bash commands like grep and awk should work.
 
 Dependencies for downloading youtube videos from ids
 
@@ -33,12 +35,12 @@ Check `selectedcategories.txt` for example format.
 ### Download multiple category videos and ids
 
 ```
-bash downloadmulticategoryvideos.sh <number-of-videos-per-category> <selected-category-file-name>"
+bash downloadmulticategoryvideos.sh <number-of-videos-per-category> <selected-category-file-name>
 ```
 
 This downloads youtube-ids corresponding to the categories in `<selected-category-file-name>` file under the folder `category-ids`. It also downloads `<number-of-videos-per-category>` videos per category in `videos` folder (The video names have a prefix as their category name). If you would like to download all the videos specify `<number-of-videos-per-category>` as `0`.
 
-By default a video is only downloaded if a `mp4` is available of `1280x720` resolution. You can change this by changing the value for `-f` modifier in `downloadvideos.sh` (`-f 22` stands for `mp4 1280x720`). To list the types of formats supported refer this stackoverflow [question](https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl).
+By default a video is downloaded in the best possible resolution. If you want to download only an `mp4` of a fixed resolution like `1280x720`, you can do this changing the value for `-f` modifier in `downloadvideos.sh` at line numbers `31` and `40` (`-f 22` stands for `mp4 1280x720` whereas `-f best` stands for best possible resolution). To list the types of formats supported refer this stackoverflow [question](https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl).
 
 
 ***Example Usage***
@@ -73,15 +75,15 @@ This will generates frames in `png` format under the `frames` folder.
 #### Download video-ids  
 
 ```
-bash downloadcategoryids.sh <category-name>
+bash downloadcategoryids.sh <number-of-videos> <category-name>
 ```
 
-This downloads youtube-ids corresponding to the `category-name` under the folder `category-ids`
+This downloads `<number-of-videos>` youtube-ids corresponding to the `category-name` under the folder `category-ids`. If you would like to download all the videos specify `<number-of-videos>` as `0`.
 
 ***Example usage***
 
 ```
-bash downloadcategoryids.sh The Walt Disney Company
+bash downloadcategoryids.sh 0 The Walt Disney Company
 ```
 
 Be really careful and don't include any extra spaces after the category name. 
@@ -99,7 +101,7 @@ bash downloadvideos.sh <number-of-videos> <category-name>
 
 This downloads `<number-of-videos>` youtube videos corresponding to the `category-name` under the folder `videos`. If you want to download all the videos of the category specify `<number-of-videos>` as `0`
 
-By default it tries to download the video only if a `mp4` is present of `1280x720` resolution. You can change this by changing the value for `-f` modifier in `downloadvideos.sh` (`-f 22` stands for `mp4 1280x720`). To list the types of formats supported refer this stackoverflow [question](https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl).
+By default a video is downloaded in the best possible resolution. If you want to download only an `mp4` of a fixed resolution like `1280x720`, you can do this changing the value for `-f` modifier in `downloadvideos.sh` at line numbers `31` and `40` (`-f 22` stands for `mp4 1280x720` whereas `-f best` stands for best possible resolution). To list the types of formats supported refer this stackoverflow [question](https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl).
 
 ***Example usage***
 ```
