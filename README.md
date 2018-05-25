@@ -3,7 +3,7 @@ This repository contains scripts for downloading videos corresponding to a parti
 
 The official `youtube-8m dataset` website contains information for downloading only videos and frame level features in the format of tensorflow protocal buffers. Hence, in this repository I wrote a few bash scripts for download ids, videos and frames of youtube-8m dataset.
 
-**UPDATED to support May 2018 version which has 6.1M videos, 3862 classes** (The older Feb 2017 version of the Youtube8M dataset had 7.0M videos and 4716 classes)
+**UPDATED to support May 2018 version which has 6.1M videos, 3862 classes** (The older Feb 2017 version of the Youtube8M dataset had 7.0M videos and 4716 classes). You can access the older version of this repository which worked with the Feb 2017 version from [this link](https://github.com/gsssrao/youtube-8m-videos-frames/tree/4b4c35e8698a3b4222a680f5ad1e8df37b7cbe66)
 
 ## Dependencies
 
