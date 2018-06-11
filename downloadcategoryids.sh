@@ -47,7 +47,7 @@ fi
 # URL to get tf-id
 url1='https://storage.googleapis.com/data.yt8m.org/2/j/i/'
 # # category-ids/tmp$txtName
-awk -v var="$url1" '$0="'"$url1"'"substr($0,0,2)"/"$0".js"' category-ids/tmp$txtName > category-ids/$txtName
+awk -v var="$url1" '$0="'"$url1"'"substr($0,0,3)"/"$0".js"' category-ids/tmp$txtName > category-ids/$txtName
 
 # Download actual youtube-video-id for each tf-record-id
 rm -rf category-ids/tmp$txtName
