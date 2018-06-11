@@ -39,7 +39,7 @@ tail -n +2 category-ids/tmp$txtName > category-ids/$txtName
 
 # Just keep as many tf-record-ids as necessary
 if [ "$1" -eq 0 ]; then
-    mv category-ids/$txtName > category-ids/tmp$txtName
+    mv category-ids/$txtName category-ids/tmp$txtName
 else
     awk -v var="$numVideos" ' NR <= var' category-ids/$txtName > category-ids/tmp$txtName
 fi
