@@ -39,15 +39,27 @@ tail -n +2 category-ids/tmp$txtName > category-ids/$txtName
 
 # Just keep as many tf-record-ids as necessary
 if [ "$1" -eq 0 ]; then
-    mv category-ids/$txtName > category-ids/tmp$txtName
+    mv category-ids/$txtName category-ids/tmp$txtName
 else
     awk -v var="$numVideos" ' NR <= var' category-ids/$txtName > category-ids/tmp$txtName
 fi
 
 # URL to get tf-id
 url1='https://storage.googleapis.com/data.yt8m.org/2/j/i/'
-# # category-ids/tmp$txtName
-awk -v var="$url1" '$0="'"$url1"'"substr($0,0,2)"/"$0".js"' category-ids/tmp$txtName > category-ids/$txtName
+
+# Get first two characters of tf-record
+cut -c1-2 category-ids/tmp$txtName > category-ids/tmp2$txtName
+
+rm -rf category-ids/$txtName
+
+# Generate the url to fetch-youtube id in category-ids/$txtName
+exec 6<"category-ids/tmp2$txtName"
+while read -r line
+do
+    read -r firstTwoChars <&6
+    echo "${url1}${firstTwoChars}/${line}.js" >> category-ids/$txtName
+done <"category-ids/tmp${txtName}"
+exec 6<&-
 
 # Download actual youtube-video-id for each tf-record-id
 rm -rf category-ids/tmp$txtName
@@ -65,5 +77,6 @@ done < category-ids/$txtName
 # Cleanup
 mv category-ids/tmp$txtName category-ids/$txtName
 rm -rf category-ids/tmp$txtName
+rm -rf category-ids/tmp2$txtName
 
 echo "Completed downloading youtube video-ids"

@@ -11,7 +11,7 @@ A summary of how this repository works can be found [here](https://github.com/gs
 
 Dependencies for downloading youtube video ids for categories
 
-* Basic bash commands like grep and awk should work.
+* Basic bash commands like grep, awk and cut should work.
 
 Dependencies for downloading youtube videos from ids
 
