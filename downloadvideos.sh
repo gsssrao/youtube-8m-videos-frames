@@ -21,14 +21,21 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     mid=$(grep -P "\t$name \(" youtube8mcategories.txt | grep -o "\".*\"" | sed -n 's/"\(.*\)"/\1/p')
 fi
 mid=$mid$txt
+label_file="label_$mid"
+line_number=1
 
 mkdir -p videos
+mkdir -p labels
 
 if [ "$1" -eq 0 ]; then
 	while read line
 		do
 			# Use -f 22/best to download in whatever best format and quality available if not 22 i.e. mp4 720p
 			$YTDL -f best "http://www.youtube.com/watch?v=$line" -o ./videos/"$name%(title)s-%(id)s.%(ext)s"
+			video_filename=`ls ./videos | grep "$line"`
+			label_filename="${video_filename%.*}-lbl.txt"
+			sed -n "${line_number}p" category-ids/$label_file > ./labels/"$label_filename"
+			line_number=$(($line_number+1))
 		done < category-ids/$mid
 else
 	limit=$1
@@ -43,8 +50,15 @@ else
 					limit=$(($limit+1))
 				fi
 				rm -rf log.txt
+				video_filename=`ls ./videos | grep "$line"`
+				label_filename="${video_filename%.*}-lbl.txt"
+				sed -n "${line_number}p" category-ids/$label_file > ./labels/"$label_filename"
+				line_number=$(($line_number+1))
 			else
 				break
 			fi
 		done < category-ids/$mid
 fi
+
+# Cleanup
+rm ./labels/-lbl.txt
