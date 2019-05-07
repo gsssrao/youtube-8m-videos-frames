@@ -4,6 +4,10 @@ if [ "$#" -lt 2 ]; then
 	exit 1
 fi
 
+if [ ! -f ./VideoIds.csv ]; then
+	tar xf VideoIds.tar.bz2
+fi
+
 js=".js"
 txt=".txt"
 name="${@:2}"
@@ -51,13 +55,14 @@ url1='https://storage.googleapis.com/data.yt8m.org/2/j/i/'
 cut -c1-2 category-ids/tmp$txtName > category-ids/tmp2$txtName
 
 rm -rf category-ids/$txtName
-
+rm -rf category-ids/"label_${txtName}"
 # Generate the url to fetch-youtube id in category-ids/$txtName
 exec 6<"category-ids/tmp2$txtName"
 while read -r line
 do
     read -r firstTwoChars <&6
     echo "${url1}${firstTwoChars}/${line}.js" >> category-ids/$txtName
+    grep "${line}" VideoIds.csv >> category-ids/"label_${txtName}"
 done <"category-ids/tmp${txtName}"
 exec 6<&-
 
